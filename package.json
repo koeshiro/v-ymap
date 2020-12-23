@@ -1,0 +1,14 @@
+{
+  "name": "vue-ymaps",
+  "version": "1.0.0",
+  "description": "Yandex map for vue",
+  "main": "index.js",
+  "scripts": {
+    
+  },
+  "author": "koeshiro kagami",
+  "license": "MIT",
+  "dependencies": {
+    "ymaps": "^0.2.1"
+  }
+}
