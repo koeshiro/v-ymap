@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/dist/esm/main.css" rel="stylesheet" type="text/css" />
+    <title>v-ymap-polygon example</title>
+</head>
+
+<body>
+    <div id="el"></div>
+    <script type="module">
+        import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.js'
+        import VueYMap from '/dist/esm/index.js'
+        (async () => {
+            await Vue.use(VueYMap, { YMAPS_LANG: 'ru_RU' });
+            setTimeout(() => {
+                const app = new Vue({
+                    el: '#el',
+                    template: `
+                        <div class="example">
+                            <v-ymap :center="[55.75, 37.80]" :zoom="10">
+                                <v-ymap-polygon :geometry="[[[55.75, 37.80],[55.80, 37.90],[55.75, 38.00],[55.70, 38.00],[55.70, 37.80]]]"/>
+                            </v-ymap>
+                        </div>`
+                })
+            }, 5000)
+        })();
+    </script>
+    <style>
+        .example {
+            height: 500px;
+        }
+    </style>
+</body>
+
+</html>

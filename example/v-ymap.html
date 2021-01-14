@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="/dist/esm/main.css" rel="stylesheet" type="text/css" />
+    <title>v-ymap example</title>
+</head>
+
+<body>
+    <div id="el"></div>
+    <script type="module">
+        import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.js'
+        import VueYMap from '/dist/esm/index.js'
+        (async () => {
+            await Vue.use(VueYMap, { YMAPS_LANG: 'ru_RU' });
+            setTimeout(() => {
+                const app = new Vue({
+                    el: '#el',
+                    template: `<div class="example"><v-ymap :center="[55.727751,52.433731]" :zoom="10" /></div>`
+                })
+            }, 5000)
+        })();
+    </script>
+    <style>
+        .example {
+            height: 500px;
+        }
+    </style>
+</body>
+
+</html>
