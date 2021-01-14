@@ -8,8 +8,12 @@ let mapsObject = null;
  */
 export default async function (options) {
   if (mapsObject === null) {
+    let o = {
+      YMAPS_VERSION:'2.1',
+      ...options
+    }
     mapsObject = await ymaps.load(
-      `https://api-maps.yandex.ru/${options.YMAPS_VERSION}/?apikey=${options.YMAPS_KEY}&lang=${options.YMAPS_LANG}`
+      `https://api-maps.yandex.ru/${o.YMAPS_VERSION}/?${'YMAPS_KEY' in o ? `apiKey=${o.YMAPS_KEY}&` : ''}${'YMAPS_LANG' in o ? `lang=${o.YMAPS_LANG}` : ''}`
     )
   }
   return mapsObject;

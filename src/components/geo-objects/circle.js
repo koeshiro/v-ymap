@@ -1,4 +1,4 @@
-import ymaps from "../..ymaps";
+import ymaps from "../../ymaps.js";
 
 export default {
     render(h) {

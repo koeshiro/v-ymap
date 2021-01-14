@@ -1,10 +1,10 @@
-import './index.css'
-import ymaps from '../ymaps';
+import ymaps from "../ymaps.js";
 
 export default {
+    name: "v-ymap",
     render(h) {
         return h('div', { class: "yandex-maps_container" }, [
-            h('div', { class: "yandex-maps", ref="map" }, [
+            h('div', { class: "yandex-maps", "ref":"map" }, [
                 h('div', { class: "yandex-maps_slots" }, [this.$slots.default])
             ])
         ]);
