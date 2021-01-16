@@ -1,5 +1,5 @@
 {
-  "name": "vue-ymaps",
+  "name": "v-ymap",
   "version": "1.1.0",
   "description": "Yandex map for vue",
   "main": "dist/cjs/index.js",
