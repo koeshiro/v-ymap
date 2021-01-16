@@ -1,7 +1,7 @@
 import css from 'rollup-plugin-css-only';
-import resolve from 'rollup-plugin-node-resolve';
+import resolve from '@rollup/plugin-node-resolve';
 import clear from 'rollup-plugin-clear';
-import babel from 'rollup-plugin-babel';
+import babel from '@rollup/plugin-babel';
 import { eslint } from "rollup-plugin-eslint"
 
 export default [
