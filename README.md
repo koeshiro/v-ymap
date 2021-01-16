@@ -2,6 +2,10 @@
 
 vue plugin for yandex map
 
+Install Project as dependency
+```sh
+npm i v-ymap
+```
 Building project
 ```bash
 npm run build
