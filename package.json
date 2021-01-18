@@ -4,8 +4,10 @@
   "description": "Yandex map for vue",
   "keywords": [
     "yandex",
+    "yandex-map",
     "map",
     "vue",
+    "vuejs",
     "plugin"
   ],
   "main": "dist/cjs/index.js",
