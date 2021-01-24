@@ -23,6 +23,9 @@ General component of map, other components using in v-ymap default slot.
 | Name              | Option                  | Type     | required  | example       | y.docs |
 | ---------------   | :---------------------: | :------: | :-------: | :-----------: | -----: |
 | v-ymap            |                         |          |           |               | [Map](https://yandex.com/dev/maps/jsapi/doc/2.1/ref/reference/Map.html) |
+|                   | YMAPS_KEY               | String   | **false** |               |
+|                   | YMAPS_LANG              | String   | **false** |               |
+|                   | YMAPS_VERSION           | String   | **false** |               |
 |                   | center                  | Number[] | **true**  | [55.55,55.55] |
 |                   | zoom                    | Number   | **true**  | 10            |
 |                   | behaviors               | Array    | **false** | ['default']   |
