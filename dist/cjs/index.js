@@ -7,7 +7,7 @@
 var index = {
   install: function install(Vue) {
     Vue.component('v-ymap', function () {
-      return Promise.resolve().then(function () { return require('./index-029066c6.js'); });
+      return Promise.resolve().then(function () { return require('./index-8af2a00c.js'); });
     });
     Vue.component('v-ymap-collection', function () {
       return Promise.resolve().then(function () { return require('./collection-bad660ec.js'); });

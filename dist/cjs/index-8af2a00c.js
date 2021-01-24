@@ -64,7 +64,7 @@ function _ref() {
               YMAPS_VERSION: '2.1'
             }, options);
             _context.next = 4;
-            return ymaps$1.load("https://api-maps.yandex.ru/".concat(o.YMAPS_VERSION, "/?").concat('YMAPS_KEY' in o ? "apiKey=".concat(o.YMAPS_KEY, "&") : '').concat('YMAPS_LANG' in o ? "lang=".concat(o.YMAPS_LANG) : ''));
+            return ymaps$1.load("https://api-maps.yandex.ru/".concat(o.YMAPS_VERSION, "/?").concat('YMAPS_KEY' in o && o.YMAPS_KEY.length > 0 ? "apiKey=".concat(o.YMAPS_KEY, "&") : '').concat('YMAPS_LANG' in o ? "lang=".concat(o.YMAPS_LANG) : ''));
 
           case 4:
             mapsObject = _context.sent;

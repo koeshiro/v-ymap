@@ -3,7 +3,7 @@
  */
 var index = {
     install(Vue){
-        Vue.component('v-ymap', ()=> import('./index-aec9a28c.js'));
+        Vue.component('v-ymap', ()=> import('./index-7784ec53.js'));
         Vue.component('v-ymap-collection', ()=> import('./collection-e7a4a423.js'));
         Vue.component('v-ymap-clusterer', ()=> import('./clusterer-6a1a1576.js'));
         Vue.component('v-ymap-circle', ()=> import('./circle-234e22db.js'));
