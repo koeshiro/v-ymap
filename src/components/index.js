@@ -22,6 +22,10 @@ export default {
             type: String,
             default: '2.1'
         },
+        YMAPS_LOAD_BY_REQUIRE: {
+            type: Boolean,
+            default: true
+        },
         center: {
             type: Array,
             required: true,
@@ -83,7 +87,8 @@ export default {
         this.maps = await ymaps({
             YMAPS_KEY: this.YMAPS_KEY,
             YMAPS_LANG: this.YMAPS_LANG,
-            YMAPS_VERSION: this.YMAPS_VERSION
+            YMAPS_VERSION: this.YMAPS_VERSION,
+            YMAPS_LOAD_BY_REQUIRE: this.YMAPS_LOAD_BY_REQUIRE
         });
         this.map = new this.maps.Map(this.$refs.map, {
             center: this.center,

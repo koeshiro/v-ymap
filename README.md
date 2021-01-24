@@ -26,6 +26,7 @@ General component of map, other components using in v-ymap default slot.
 |                   | YMAPS_KEY               | String   | **false** |               |
 |                   | YMAPS_LANG              | String   | **false** |               |
 |                   | YMAPS_VERSION           | String   | **false** |               |
+|                   | YMAPS_LOAD_BY_REQUIRE   | Boolean  | **false** | true          |
 |                   | center                  | Number[] | **true**  | [55.55,55.55] |
 |                   | zoom                    | Number   | **true**  | 10            |
 |                   | behaviors               | Array    | **false** | ['default']   |
