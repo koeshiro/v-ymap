@@ -13,8 +13,8 @@
     <script type="module">
         import Vue from 'https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.esm.browser.js'
         import VueYMap from '/dist/esm/index.js'
-        (async () => {
-            await Vue.use(VueYMap, { YMAPS_LANG: 'ru_RU' });
+        (() => {
+            Vue.use(VueYMap);
             setTimeout(() => {
                 const app = new Vue({
                     el: '#el',
