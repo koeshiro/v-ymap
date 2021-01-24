@@ -1,5 +1,3 @@
-import { y as ymaps } from './index-a00f3fd0.js';
-
 var route = {
     render(h) {
         return h('div', { class: "yandex-route_not-used-dom-element" });
@@ -84,8 +82,7 @@ var route = {
         }
     },
     methods: {
-        async getGeoObject() {
-            const maps = await ymaps();
+        async getGeoObject(maps) {
             let route = await maps.route(this.points, this.params);
             return route;
         }

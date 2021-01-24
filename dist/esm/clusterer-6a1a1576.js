@@ -1,5 +1,3 @@
-import { y as ymaps } from './index-a00f3fd0.js';
-
 var clusterer = {
     render(h) {
         return h('div', { class: "yandex-clusterer_not-used-dom-element" }, [this.$slots.default]);
@@ -70,8 +68,7 @@ var clusterer = {
         }
     },
     methods: {
-        async getGeoObject() {
-            const maps = await ymaps();
+        async getGeoObject(maps) {
             let cluster = new maps.Clusterer({
                 gridSize: this.gridSize,
                 groupByCoordinates: this.groupByCoordinates,

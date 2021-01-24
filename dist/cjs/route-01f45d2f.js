@@ -1,6 +1,6 @@
 'use strict';
 
-var index = require('./index-e76541aa.js');
+var _rollupPluginBabelHelpers = require('./_rollupPluginBabelHelpers-764e5ec4.js');
 
 var route = {
   render: function render(h) {
@@ -21,7 +21,7 @@ var route = {
           return false;
         }
 
-        var _iterator = index._createForOfIteratorHelper(value),
+        var _iterator = _rollupPluginBabelHelpers._createForOfIteratorHelper(value),
             _step;
 
         try {
@@ -32,7 +32,7 @@ var route = {
               return false;
             }
 
-            if (index._typeof(item) === 'object' && (!('type' in item && 'point' in item) || 'type' in item && 'point' in item && !['viaPoint', 'wayPoint'].includes(item.type))) {
+            if (_rollupPluginBabelHelpers._typeof(item) === 'object' && (!('type' in item && 'point' in item) || 'type' in item && 'point' in item && !['viaPoint', 'wayPoint'].includes(item.type))) {
               return false;
             }
 
@@ -75,28 +75,23 @@ var route = {
     }
   },
   methods: {
-    getGeoObject: function getGeoObject() {
+    getGeoObject: function getGeoObject(maps) {
       var _this = this;
 
-      return index._asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var maps, route;
+      return _rollupPluginBabelHelpers._asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var route;
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return index.ymaps();
-
-              case 2:
-                maps = _context.sent;
-                _context.next = 5;
                 return maps.route(_this.points, _this.params);
 
-              case 5:
+              case 2:
                 route = _context.sent;
                 return _context.abrupt("return", route);
 
-              case 7:
+              case 4:
               case "end":
                 return _context.stop();
             }

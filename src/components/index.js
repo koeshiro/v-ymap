@@ -4,12 +4,24 @@ export default {
     name: "v-ymap",
     render(h) {
         return h('div', { class: "yandex-maps_container" }, [
-            h('div', { class: "yandex-maps", "ref":"map" }, [
+            h('div', { class: "yandex-maps", "ref": "map" }, [
                 h('div', { class: "yandex-maps_slots" }, [this.$slots.default])
             ])
         ]);
     },
     props: {
+        YMAPS_KEY: {
+            type: String,
+            default: ''
+        },
+        YMAPS_LANG: {
+            type: String,
+            default: 'ru_RU'
+        },
+        YMAPS_VERSION: {
+            type: String,
+            default: '2.1'
+        },
         center: {
             type: Array,
             required: true,
@@ -68,7 +80,11 @@ export default {
         }
     },
     async mounted() {
-        this.maps = await ymaps();
+        this.maps = await ymaps({
+            YMAPS_KEY: this.YMAPS_KEY,
+            YMAPS_LANG: this.YMAPS_LANG,
+            YMAPS_VERSION: this.YMAPS_VERSION
+        });
         this.map = new this.maps.Map(this.$refs.map, {
             center: this.center,
             zoom: this.zoom,
@@ -79,18 +95,18 @@ export default {
         }, {
             ...this.options
         });
-        this.setGeoObjects(await this.getGeoObjects());
+        this.setGeoObjects(await this.getGeoObjects(this.maps));
         for (let element of this.$children) {
             element.$on('updated', async (e) => {
-                this.setGeoObjects(await this.getGeoObjects());
+                this.setGeoObjects(await this.getGeoObjects(this.maps));
             });
         }
     },
     methods: {
-        getGeoObjects() {
+        getGeoObjects(maps) {
             let awaitGetGeoObjects = [];
             for (let element of this.$children) {
-                awaitGetGeoObjects.push(element.getGeoObject());
+                awaitGetGeoObjects.push(element.getGeoObject(maps));
             }
             return Promise.all(awaitGetGeoObjects);
         },

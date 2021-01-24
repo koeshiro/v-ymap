@@ -1,8 +1,6 @@
-import { y as ymaps } from './index-a00f3fd0.js';
-
-var rectangle = {
+var polyline = {
     render(h) {
-        return h('div', { class: "yandex-rectangle_not-used-dom-element" });
+        return h('div', { class: "yandex-polyline_not-used-dom-element" });
     },
     props: {
         geometry: {
@@ -40,11 +38,10 @@ var rectangle = {
         },
     },
     methods: {
-        async getGeoObject() {
-            const maps = await ymaps();
-            return new maps.Rectangle(this.geometry, this.properties, this.options);
+        async getGeoObject(maps) {
+            return new maps.Polyline(this.geometry, this.properties, this.options);
         },
     },
 };
 
-export default rectangle;
+export default polyline;

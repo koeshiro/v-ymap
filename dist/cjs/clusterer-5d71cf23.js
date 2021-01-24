@@ -1,6 +1,6 @@
 'use strict';
 
-var index = require('./index-e76541aa.js');
+var _rollupPluginBabelHelpers = require('./_rollupPluginBabelHelpers-764e5ec4.js');
 
 var clusterer = {
   render: function render(h) {
@@ -34,7 +34,7 @@ var clusterer = {
         return [];
       },
       validator: function validator(value) {
-        var _iterator = index._createForOfIteratorHelper(value),
+        var _iterator = _rollupPluginBabelHelpers._createForOfIteratorHelper(value),
             _step;
 
         try {
@@ -86,21 +86,16 @@ var clusterer = {
     }
   },
   methods: {
-    getGeoObject: function getGeoObject() {
+    getGeoObject: function getGeoObject(maps) {
       var _this = this;
 
-      return index._asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var maps, cluster, awaitGetGeoObjects, _iterator2, _step2, element, getGeoObjects, _iterator3, _step3, getGeoObject;
+      return _rollupPluginBabelHelpers._asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var cluster, awaitGetGeoObjects, _iterator2, _step2, element, getGeoObjects, _iterator3, _step3, getGeoObject;
 
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
-                return index.ymaps();
-
-              case 2:
-                maps = _context.sent;
                 cluster = new maps.Clusterer({
                   gridSize: _this.gridSize,
                   groupByCoordinates: _this.groupByCoordinates,
@@ -116,7 +111,7 @@ var clusterer = {
                   zoomMargin: _this.zoomMargin
                 });
                 awaitGetGeoObjects = [];
-                _iterator2 = index._createForOfIteratorHelper(_this.$children);
+                _iterator2 = _rollupPluginBabelHelpers._createForOfIteratorHelper(_this.$children);
 
                 try {
                   for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
@@ -129,12 +124,12 @@ var clusterer = {
                   _iterator2.f();
                 }
 
-                _context.next = 9;
+                _context.next = 6;
                 return Promise.all(awaitGetGeoObjects);
 
-              case 9:
+              case 6:
                 getGeoObjects = _context.sent;
-                _iterator3 = index._createForOfIteratorHelper(getGeoObjects);
+                _iterator3 = _rollupPluginBabelHelpers._createForOfIteratorHelper(getGeoObjects);
 
                 try {
                   for (_iterator3.s(); !(_step3 = _iterator3.n()).done;) {
@@ -149,7 +144,7 @@ var clusterer = {
 
                 return _context.abrupt("return", cluster);
 
-              case 13:
+              case 10:
               case "end":
                 return _context.stop();
             }

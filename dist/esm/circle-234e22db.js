@@ -1,4 +1,4 @@
-export default {
+var circle = {
     render(h) {
         return h('div', { class: "yandex-circle_not-used-dom-element" });
     },
@@ -32,3 +32,5 @@ export default {
         },
     },
 };
+
+export default circle;

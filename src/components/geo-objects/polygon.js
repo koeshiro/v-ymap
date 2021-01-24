@@ -1,5 +1,3 @@
-import ymaps from "../../ymaps.js";
-
 export default {
     render(h) {
         return h('div', { class: "yandex-polygon_not-used-dom-element" });
@@ -45,8 +43,7 @@ export default {
         },
     },
     methods: {
-        async getGeoObject() {
-            const maps = await ymaps();
+        async getGeoObject(maps) {
             return new maps.Polygon(this.geometry, this.properties, this.options);
         },
     },

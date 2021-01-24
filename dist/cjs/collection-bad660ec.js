@@ -1,6 +1,6 @@
 'use strict';
 
-var index = require('./index-e76541aa.js');
+var _rollupPluginBabelHelpers = require('./_rollupPluginBabelHelpers-764e5ec4.js');
 
 var collection = {
   render: function render(h) {
@@ -17,24 +17,19 @@ var collection = {
     }
   },
   methods: {
-    getGeoObject: function getGeoObject() {
+    getGeoObject: function getGeoObject(maps) {
       var _this = this;
 
-      return index._asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var maps, Collection, awaitGetGeoObjects, _iterator, _step, element, getGeoObjects, _iterator2, _step2, getGeoObject;
+      return _rollupPluginBabelHelpers._asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+        var Collection, awaitGetGeoObjects, _iterator, _step, element, getGeoObjects, _iterator2, _step2, getGeoObject;
 
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
-                return index.ymaps();
-
-              case 2:
-                maps = _context.sent;
                 Collection = new maps.Collection(_this.options);
                 awaitGetGeoObjects = [];
-                _iterator = index._createForOfIteratorHelper(_this.$children);
+                _iterator = _rollupPluginBabelHelpers._createForOfIteratorHelper(_this.$children);
 
                 try {
                   for (_iterator.s(); !(_step = _iterator.n()).done;) {
@@ -47,12 +42,12 @@ var collection = {
                   _iterator.f();
                 }
 
-                _context.next = 9;
+                _context.next = 6;
                 return Promise.all(awaitGetGeoObjects);
 
-              case 9:
+              case 6:
                 getGeoObjects = _context.sent;
-                _iterator2 = index._createForOfIteratorHelper(getGeoObjects);
+                _iterator2 = _rollupPluginBabelHelpers._createForOfIteratorHelper(getGeoObjects);
 
                 try {
                   for (_iterator2.s(); !(_step2 = _iterator2.n()).done;) {
@@ -67,7 +62,7 @@ var collection = {
 
                 return _context.abrupt("return", Collection);
 
-              case 13:
+              case 10:
               case "end":
                 return _context.stop();
             }

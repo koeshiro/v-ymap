@@ -1,15 +1,9 @@
 import './index.css'
-import ymaps from './ymaps';
 /**
  * @param {Vue} Vue
- * @param {Object} options
- * @param {String} options.YMAPS_KEY - ключ яндекс карт
- * @param {String} options.YMAPS_LANG - версия языка
- * @param {String} options.YMAPS_VERSION - версия яндекс карт
  */
 export default {
-    async install(Vue, options={}){
-        await ymaps(options);
+    install(Vue){
         Vue.component('v-ymap', ()=> import("./components/index"));
         Vue.component('v-ymap-collection', ()=> import("./components/collection"));
         Vue.component('v-ymap-clusterer', ()=> import("./components/clusterer"));

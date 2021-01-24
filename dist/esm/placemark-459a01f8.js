@@ -1,5 +1,3 @@
-import { y as ymaps } from './index-a00f3fd0.js';
-
 var placemark = {
     render(h) {
         return h('div', { class: "yandex-placemark_not-used-dom-element" });
@@ -41,9 +39,9 @@ var placemark = {
         },
     },
     methods: {
-        async getGeoObject() {
-            const maps = await ymaps();
-            return new maps.Placemark(this.geometry, this.properties, this.options);
+        async getGeoObject(maps) {
+            const geoObject = new maps.Placemark(this.geometry, this.properties, this.options);
+            return geoObject;
         }
     }
 };

@@ -1,6 +1,6 @@
 'use strict';
 
-var index = require('./index-e76541aa.js');
+var _rollupPluginBabelHelpers = require('./_rollupPluginBabelHelpers-764e5ec4.js');
 
 var polyline = {
   render: function render(h) {
@@ -17,7 +17,7 @@ var polyline = {
           return false;
         }
 
-        var _iterator = index._createForOfIteratorHelper(value),
+        var _iterator = _rollupPluginBabelHelpers._createForOfIteratorHelper(value),
             _step;
 
         try {
@@ -58,23 +58,17 @@ var polyline = {
     }
   },
   methods: {
-    getGeoObject: function getGeoObject() {
+    getGeoObject: function getGeoObject(maps) {
       var _this = this;
 
-      return index._asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-        var maps;
+      return _rollupPluginBabelHelpers._asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
         return regeneratorRuntime.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
-                return index.ymaps();
-
-              case 2:
-                maps = _context.sent;
                 return _context.abrupt("return", new maps.Polyline(_this.geometry, _this.properties, _this.options));
 
-              case 4:
+              case 1:
               case "end":
                 return _context.stop();
             }

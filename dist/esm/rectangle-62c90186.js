@@ -1,15 +1,24 @@
-import { y as ymaps } from './index-a00f3fd0.js';
-
-var circle = {
+var rectangle = {
     render(h) {
-        return h('div', { class: "yandex-circle_not-used-dom-element" });
+        return h('div', { class: "yandex-rectangle_not-used-dom-element" });
     },
     props: {
         geometry: {
             type: Array,
             required: true,
             validator(value) {
-                return value.length === 2 && Array.isArray(value[0]) && !Number.isNaN(value[0][1]) && !Number.isNaN(value[0][0]) && !Number.isNaN(value[1]);
+                if (value.length === 0) {
+                    return false;
+                }
+                for (let points of value) {
+                    if (!Array.isArray(points)) {
+                        return false;
+                    }
+                    if (points.length !== 2 || (points.length === 2 && (Number.isNaN(points[0]) || Number.isNaN(points[1])))) {
+                        return false;
+                    }
+                }
+                return true;
             },
         },
         properties: {
@@ -29,11 +38,10 @@ var circle = {
         },
     },
     methods: {
-        async getGeoObject() {
-            const maps = await ymaps();
-            return new maps.Circle(this.geometry, this.properties, this.options);
+        async getGeoObject(maps) {
+            return new maps.Rectangle(this.geometry, this.properties, this.options);
         },
     },
 };
 
-export default circle;
+export default rectangle;

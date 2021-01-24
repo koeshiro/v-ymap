@@ -10,5 +10,5 @@ app.use(express.static(__dirname));
     res.end(await fsp.readFile(`${__dirname}/v-ymap.html`));
 });*/
 app.listen(3000,()=>{
-
+    console.log('http://localhost:3000')
 });

@@ -1,5 +1,3 @@
-import { y as ymaps } from './index-a00f3fd0.js';
-
 var collection = {
     render(h) {
         return h('div', { class: "yandex-сollection_not-used-dom-element" }, [this.$slots.default]);
@@ -13,8 +11,7 @@ var collection = {
         },
     },
     methods: {
-        async getGeoObject() {
-            const maps = await ymaps();
+        async getGeoObject(maps) {
             let Collection = new maps.Collection(this.options);
             let awaitGetGeoObjects = [];
             for (let element of this.$children) {
