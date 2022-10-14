@@ -1,6 +1,7 @@
-import ymaps from "../ymaps-load.ts";
+import Vue from "vue";
+import ymaps from "../ymaps-load";
 
-export default {
+export default Vue.extend({
     name: "v-ymap",
     render(h) {
         return h('div', { class: "yandex-maps_container" }, [
@@ -29,7 +30,7 @@ export default {
         center: {
             type: Array,
             required: true,
-            validator(value) {
+            validator(value:number[]) {
                 return value.length === 2 && !Number.isNaN(value[0]) && !Number.isNaN(value[1]);
             }
         },
@@ -54,7 +55,7 @@ export default {
             default() {
                 return []
             },
-            validator(value) {
+            validator(value:number[]) {
                 for (let v of value) {
                     if (Number.isNaN(v)) {
                         return false;
@@ -66,7 +67,7 @@ export default {
         type: {
             type: String,
             default: 'yandex#map',
-            validator(value) {
+            validator(value: string) {
                 return ['yandex#map', 'yandex#satellite', 'yandex#hybrid'].includes(value);
             }
         },
@@ -108,18 +109,18 @@ export default {
         }
     },
     methods: {
-        getGeoObjects(maps) {
+        getGeoObjects(maps): Promise<any> {
             let awaitGetGeoObjects = [];
             for (let element of this.$children) {
                 awaitGetGeoObjects.push(element.getGeoObject(maps));
             }
             return Promise.all(awaitGetGeoObjects);
         },
-        setGeoObjects(geoObjects) {
+        setGeoObjects(geoObjects): void {
             this.map.geoObjects.removeAll();
             for (let getGeoObject of geoObjects) {
                 this.map.geoObjects.add(getGeoObject);
             }
         }
     }
-}
+});

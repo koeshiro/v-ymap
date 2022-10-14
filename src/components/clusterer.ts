@@ -1,4 +1,23 @@
-export default {
+import Vue from "vue";
+
+export type ClustererProps = {
+    gridSize: number;
+    groupByCoordinates: boolean;
+    hasBalloon: boolean;
+    hasHint: boolean;
+    margin: number[];
+    maxZoom: number;
+    minClusterSize: number;
+    preset: string;
+    showInAlphabeticalOrder: boolean;
+    useMapMargin: boolean;
+    viewportMargin: number;
+    zoomMargin: number;
+}
+
+
+
+export default Vue.extend<{},{getGeoObject:(maps:any) => Promise<any>},{},ClustererProps>({
     render(h) {
         return h('div', { class: "yandex-clusterer_not-used-dom-element" }, [this.$slots.default]);
     },
@@ -6,7 +25,7 @@ export default {
         gridSize: {
             type: Number,
             default: 64,
-            validater(value) {
+            validator(value:number) {
                 return value % 2 === 0
             }
         },
@@ -27,7 +46,7 @@ export default {
             default() {
                 return []
             },
-            validator(value) {
+            validator(value:number[]) {
                 for (let v of value) {
                     if (Number.isNaN(v)) {
                         return false;
@@ -68,7 +87,7 @@ export default {
         }
     },
     methods: {
-        async getGeoObject(maps) {
+        async getGeoObject(maps:any): Promise<any> {
             let cluster = new maps.Clusterer({
                 gridSize: this.gridSize,
                 groupByCoordinates: this.groupByCoordinates,
@@ -94,4 +113,4 @@ export default {
             return cluster;
         }
     }
-}
+});

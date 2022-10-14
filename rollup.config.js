@@ -4,15 +4,17 @@ import clear from 'rollup-plugin-clear';
 import babel from '@rollup/plugin-babel';
 import { eslint } from "rollup-plugin-eslint";
 import { terser } from "rollup-plugin-terser";
+import typescript from '@rollup/plugin-typescript';
 
 export default [
     {
-        input: './src/index.js',
+        input: './src/index.ts',
         plugins: [
             css({ output: 'main.css' }),
             eslint({}),
             resolve({}),
             clear({ targets: ['dist/cjs'] }),
+            typescript(),
             babel({}),
             terser({ toplevel: true })
         ],
@@ -22,7 +24,7 @@ export default [
         }
     },
     {
-        input: './src/index.js',
+        input: './src/index.ts',
         plugins: [
             css({ output: 'main.css' }),
             eslint({}),
