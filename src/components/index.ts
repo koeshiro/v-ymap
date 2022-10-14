@@ -1,4 +1,4 @@
-import ymaps from "../ymaps.js";
+import ymaps from "../ymaps-load.ts";
 
 export default {
     name: "v-ymap",
