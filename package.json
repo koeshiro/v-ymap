@@ -24,21 +24,24 @@
   },
   "homepage": "https://github.com/koeshiro/v-ymap",
   "license": "MIT",
+  "peerDependencies": {
+    "vue": "^2.7.14"
+  },
   "devDependencies": {
-    "@rollup/plugin-typescript": "^8.5.0",
-    "vue": "^2.7.10",
     "@babel/core": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
-    "@rollup/plugin-babel": "^5.2.2",
-    "@rollup/plugin-node-resolve": "^11.1.0",
+    "@rollup/plugin-node-resolve": "^15.0.1",
+    "@rollup/plugin-typescript": "^8.5.0",
+    "@typescript-eslint/parser": "^5.44.0",
     "babel-eslint": "^10.1.0",
     "babel-plugin-syntax-dynamic-import": "^6.18.0",
     "express": "^4.17.1",
     "rollup": "^2.36.2",
     "rollup-plugin-clear": "^2.0.7",
-    "rollup-plugin-css-only": "^3.1.0",
+    "rollup-plugin-copy": "^3.4.0",
     "rollup-plugin-eslint": "^7.0.0",
+    "rollup-plugin-exclude-dependencies-from-bundle": "^1.1.23",
     "rollup-plugin-terser": "^7.0.2",
-    "typescript": "^4.8.3"
+    "typescript": "^4.9.3"
   }
 }

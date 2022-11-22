@@ -1,21 +1,19 @@
 {
     "compilerOptions": {
-        "module": "CommonJS",
-        "declaration": true,
+        "module": "esnext",
+        "moduleResolution": "node",
         "removeComments": true,
-        "emitDecoratorMetadata": true,
-        "experimentalDecorators": true,
         "allowSyntheticDefaultImports": true,
         "target": "es2017",
-        "sourceMap": true,
-        "outDir": "./dist",
         "baseUrl": "./",
         "incremental": true
     },
     "include": [
-        "src/*",
+        "src/*.ts",
+        "src/**/*.ts"
     ],
     "exclude": [
-      "node_modules"
+      "node_modules",
+      "src/index.css"
     ]
 }

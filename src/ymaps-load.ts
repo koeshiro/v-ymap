@@ -1,28 +1,37 @@
 let mapsObject = null;
 let importPromise: Promise<any> | null = null;
 
-export const load = (src:string = '//api-maps.yandex.ru/2.1/?lang=en_RU') => {
+async function importMap(src: string, ns?: string) {
+  const key = ns ?? 'ymaps';
+  return new Promise((resolve, reject) => {
+    const scriptElement = document.createElement('script');
+    scriptElement.onload = resolve;
+    scriptElement.onerror = reject;
+    scriptElement.type = 'text/javascript';
+    scriptElement.src = src;
+    document.body.appendChild(scriptElement);
+  }).then(() => {
+    return new Promise(resolve => (window||global)[key].ready(resolve));
+  });
+}
+
+const load = (src: string = '//api-maps.yandex.ru/2.1/?lang=en_RU', ns?: string) => {
   if(importPromise !== null) {
     return importPromise;
   }
-  importPromise = import(src);
+  importPromise = importMap(src, ns);
   return importPromise;
 }
 
-export type Options = {
+export type MapLoaderOptions = {
   YMAPS_KEY: string;
   YMAPS_LANG: string;
   YMAPS_VERSION?: string;
   YMAPS_LOAD_BY_REQUIRE?: boolean;
-}
-/**
- * @param options
- * @param options.YMAPS_KEY ключ яндекс карт
- * @param options.YMAPS_LANG версия языка
- * @param options.YMAPS_VERSION версия яндекс карт
- * @param options.YMAPS_LOAD_BY_REQUIRE
- */
-export default async function (options:Options):Promise<any> {
+  YMAPS_NS?: string;
+};
+
+export const YMapsLoad = async function (options: MapLoaderOptions): Promise<any> {
   if (mapsObject === null) {
     let o = {
       YMAPS_LOAD_BY_REQUIRE: true,
@@ -36,7 +45,8 @@ export default async function (options:Options):Promise<any> {
         'YMAPS_LANG' in o ? `lang=${o.YMAPS_LANG}` : ''
       }${
         'YMAPS_LOAD_BY_REQUIRE' in o && o.YMAPS_LOAD_BY_REQUIRE === true ? '&loadByRequire=1' : ''
-      }`
+      }`,
+        o.YMAPS_NS ?? undefined
     )
   }
   return mapsObject;
