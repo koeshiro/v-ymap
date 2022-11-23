@@ -1,1 +1,0 @@
-var e={render(e){return e("div",{class:"yandex-сollection_not-used-dom-element"},[this.$slots.default])},props:{options:{type:Object,default:()=>({})}},methods:{async getGeoObject(e){let t=new e.Collection(this.options),o=[];for(let e of this.$children)o.push(e.getGeoObject());let l=await Promise.all(o);for(let e of l)t.add(e);return t}}};export default e;
