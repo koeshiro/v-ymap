@@ -82,24 +82,24 @@ Balloon. A geo object with the geometry
 |                   | autoPan                 | Boolean         | **false** | true            | [Ballon](https://yandex.com/dev/maps/jsapi/doc/2.1/ref/reference/Balloon.html) |
 |                   | autoPanCheckZoomRange   | Boolean         | **false** | false           |
 |                   | autoPanDuration         | Number          | **false** | 500             |
-|                   | autoPanMargin           | Number|Number[] | **false** | 34              |
+|                   | autoPanMargin           | Number,Number[] | **false** | 34              |
 |                   | autoPanUseMapMargin     | Boolean         | **false** | true            |
 |                   | closeButton             | Boolean         | **false** |                 |
 |                   | closeTimeout            | Number          | **false** | 700             |
-|                   | contentLayout           | Function|String | **false** |                 |
+|                   | contentLayout           | Function,String | **false** |                 |
 |                   | interactivityModel      | String          | **false** |                 |
-|                   | layout                  | Function|String | **false** | islands#balloon |
+|                   | layout                  | Function,String | **false** | islands#balloon |
 |                   | maxHeight               | Number          | **false** |                 |
 |                   | maxWidth                | Number          | **false** |                 |
 |                   | minHeight               | Number          | **false** |                 |
 |                   | offset                  | Number[]        | **false** |                 |
 |                   | openTimeout             | Number          | **false** | 150             |
 |                   | pane                    | String          | **false** | 'balloon'       |
-|                   | panelContentLayout      | Function|String | **false** | null            |
+|                   | panelContentLayout      | Function,String | **false** | null            |
 |                   | panelMaxHeightRatio     | Number          | **false** |                 |
 |                   | panelMaxMapArea         | Number          | **false** |                 |
 |                   | shadow                  | Boolean         | **false** | true            |
-|                   | shadowLayout            | Function|String | **false** |                 |
+|                   | shadowLayout            | Function,String | **false** |                 |
 |                   | shadowOffset            | Number[]        | **false** |                 |
 |                   | zIndex                  | String          | **false** |                 |
 
