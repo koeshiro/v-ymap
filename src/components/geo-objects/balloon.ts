@@ -117,19 +117,19 @@ export const YBalloon = Vue.extend<
         getOverlaySync(): any {
             return this.balloon.getOverlaySync();
         },
-        getPosition(): any {
+        getPosition(): number[] {
             return this.balloon.getPosition();
         },
         isOpen(): boolean {
             return this.balloon.isOpen();
         },
-        open(position?: any, data?:any): Promise<any> {
+        open(position?: number[], data?:any): Promise<any> {
             return this.balloon.open(position, data);
         },
         setData(data: any): Promise<any> {
             return this.balloon.setData(data);
         },
-        setPosition(position): Promise<any> {
+        setPosition(position: number[]): Promise<any> {
             return this.balloon.setPosition(position);
         }
     }
