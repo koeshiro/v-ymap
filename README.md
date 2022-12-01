@@ -1,6 +1,16 @@
 # v-ymap
+Vue components for work with yandex map. 
 
-vue plugin for yandex map
+### Examples
+```vue
+<y-map :center="[11.111111,11.111111]" :zoom="10" />
+```
+```vue
+<y-map :center="[11.111111,11.111111]" :zoom="10">
+ <y-route :points="['City 17', 'City 20']"></y-route>
+</y-map>
+```
+
 
 Install Project as dependency
 ```sh
@@ -10,19 +20,14 @@ Building project
 ```bash
 npm run build
 ```
-Examples
-```bash
-npm run test:server
-```
-for start test server with examples from ***./examples*** folder.
 
 ## Components
 
-### v-ymap
+### y-map
 General component of map, other components using in v-ymap default slot.
 | Name              | Option                  | Type     | required  | example       | y.docs |
 | ---------------   | :---------------------: | :------: | :-------: | :-----------: | -----: |
-| v-ymap            |                         |          |           |               | [Map](https://yandex.com/dev/maps/jsapi/doc/2.1/ref/reference/Map.html) |
+| y-map             |                         |          |           |               | [Map](https://yandex.com/dev/maps/jsapi/doc/2.1/ref/reference/Map.html) |
 |                   | YMAPS_KEY               | String   | **false** |               |
 |                   | YMAPS_LANG              | String   | **false** |               |
 |                   | YMAPS_VERSION           | String   | **false** |               |
@@ -35,18 +40,18 @@ General component of map, other components using in v-ymap default slot.
 |                   | type                    | String   | **false** | 'yandex#map'  |
 |                   | options                 | Object   | **false** | {}            |
 
-### v-ymap-collection
+### y-map-collection
 Basic implementation of an object collection on the map.
 | Name              | Option                  | Type     | required  | example       | y.docs |
 | ---------------   | :---------------------: | :------: | :-------: | :-----------: | -----: |
-| v-ymap-collection |                         |          |           |               | [Collection](https://yandex.com/dev/maps/jsapi/doc/2.1/ref/reference/Collection.html) |
+| y-map-collection  |                         |          |           |               | [Collection](https://yandex.com/dev/maps/jsapi/doc/2.1/ref/reference/Collection.html) |
 |                   | options                 | Object   | **false** | {}            |
 
-### v-ymap-clusterer
+### y-map-clusterer
 Clusterizes objects in the visible area of the map. If the object does not fall within the visible area of the map, it will not be added to the map.
 | Name              | Option                  | Type     | required  | example       | y.docs |
 | ---------------   | :---------------------: | :------: | :-------: | :-----------: | -----: |
-| v-ymap-clusterer  |                         |          |           |               | [Clusterer](https://yandex.com/dev/maps/jsapi/doc/2.1/ref/reference/Clusterer.html) |
+| y-map-clusterer   |                         |          |           |               | [Clusterer](https://yandex.com/dev/maps/jsapi/doc/2.1/ref/reference/Clusterer.html) |
 |                   | gridSize                | Number   | **false** | 64            |
 |                   | groupByCoordinates      | Boolean  | **false** | false         |
 |                   | hasBalloon              | Boolean  | **false** | true          |
@@ -60,55 +65,84 @@ Clusterizes objects in the visible area of the map. If the object does not fall 
 |                   | viewportMargin          | Number   | **false** | 128           |
 |                   | zoomMargin              | Number   | **false** | 0             |
 
-### v-ymap-circle
+### y-map-circle
 Circle. A geo object with the geometry
 | Name              | Option                  | Type     | required  | example       | y.docs |
 | ---------------   | :---------------------: | :------: | :-------: | :-----------: | -----: |
-| v-ymap-circle     |                         |          |           |               | [Circle](https://yandex.com/dev/maps/jsapi/doc/2.1/ref/reference/Circle.html) |
+| y-map-circle      |                         |          |           |               | [Circle](https://yandex.com/dev/maps/jsapi/doc/2.1/ref/reference/Circle.html) |
 |                   | geometry                | Number[] | **true**  | [55.55,55.55] |
 |                   | properties              | Object   | **false** | { "balloonContentBody": "some text" } |
 |                   | options                 | Object   | **false** | {} |
 
-### v-ymap-placemark
+### y-map-balloon
+Balloon. A geo object with the geometry
+| Name              | Option                  | Type            | required  | example         | y.docs |
+| ---------------   | :---------------------: | :-------------: | :-------: | :-------------: | -----: |
+| y-map-balloon     |                         |                 |           |                 |        |
+|                   | autoPan                 | Boolean         | **false** | true            | [Ballon](https://yandex.com/dev/maps/jsapi/doc/2.1/ref/reference/Balloon.html) |
+|                   | autoPanCheckZoomRange   | Boolean         | **false** | false           |
+|                   | autoPanDuration         | Number          | **false** | 500             |
+|                   | autoPanMargin           | Number|Number[] | **false** | 34              |
+|                   | autoPanUseMapMargin     | Boolean         | **false** | true            |
+|                   | closeButton             | Boolean         | **false** |                 |
+|                   | closeTimeout            | Number          | **false** | 700             |
+|                   | contentLayout           | Function|String | **false** |                 |
+|                   | interactivityModel      | String          | **false** |                 |
+|                   | layout                  | Function|String | **false** | islands#balloon |
+|                   | maxHeight               | Number          | **false** |                 |
+|                   | maxWidth                | Number          | **false** |                 |
+|                   | minHeight               | Number          | **false** |                 |
+|                   | offset                  | Number[]        | **false** |                 |
+|                   | openTimeout             | Number          | **false** | 150             |
+|                   | pane                    | String          | **false** | 'balloon'       |
+|                   | panelContentLayout      | Function|String | **false** | null            |
+|                   | panelMaxHeightRatio     | Number          | **false** |                 |
+|                   | panelMaxMapArea         | Number          | **false** |                 |
+|                   | shadow                  | Boolean         | **false** | true            |
+|                   | shadowLayout            | Function|String | **false** |                 |
+|                   | shadowOffset            | Number[]        | **false** |                 |
+|                   | zIndex                  | String          | **false** |                 |
+
+### y-map-placemark
 Placemark. A geo object with the geometry
 | Name              | Option                  | Type     | required  | example       | y.docs |
 | ---------------   | :---------------------: | :------: | :-------: | :-----------: | -----: |
-| v-ymap-placemark  |                         |          |           |               | [Placemark](https://yandex.com/dev/maps/jsapi/doc/2.1/ref/reference/Placemark.html) |
+| y-map-placemark   |                         |          |           |               | [Placemark](https://yandex.com/dev/maps/jsapi/doc/2.1/ref/reference/Placemark.html) |
 |                   | geometry                | Number[] | **true**  | [55.55,55.55] |
 |                   | properties              | Object   | **false** | { "balloonContentBody": "some text" } |
 |                   | options                 | Object   | **false** | {} |
 
-### v-ymap-polygon
+### y-map-polygon
 Polygon. A geo object with the geometry
 | Name              | Option                  | Type     | required  | example       | y.docs |
 | ---------------   | :---------------------: | :------: | :-------: | :-----------: | -----: |
-| v-ymap-polygon    |                         |          |           |               | [Polygon](https://yandex.com/dev/maps/jsapi/doc/2.1/ref/reference/Polygon.html) |
+| y-map-polygon     |                         |          |           |               | [Polygon](https://yandex.com/dev/maps/jsapi/doc/2.1/ref/reference/Polygon.html) |
 |                   | geometry                | Number[] | **true**  | [[[55.75, 37.80],[55.80, 37.90],[55.75, 38.00],[55.70, 38.00],[55.70, 37.80]]] |
 |                   | properties              | Object   | **false** | { "balloonContentBody": "some text" } |
 |                   | options                 | Object   | **false** | {} |
 
-### v-ymap-polyline
+### y-map-polyline
 Polyline. A geo object with the geometry
 | Name              | Option                  | Type     | required  | example       | y.docs |
 | ---------------   | :---------------------: | :------: | :-------: | :-----------: | -----: |
-| v-ymap-polyline   |                         |          |           |               | [Polyline](https://yandex.com/dev/maps/jsapi/doc/2.1/ref/reference/Polyline.html) |
+| y-map-polyline    |                         |          |           |               | [Polyline](https://yandex.com/dev/maps/jsapi/doc/2.1/ref/reference/Polyline.html) |
 |                   | geometry                | Number[] | **true**  | [[55.80, 37.50],[55.80, 37.40],[55.70, 37.50],[55.70, 37.40]] |
 |                   | properties              | Object   | **false** | { "balloonContentBody": "some text" } |
 |                   | options                 | Object   | **false** | {} |
 
-### v-ymap-rectangle
+### y-map-rectangle
 Rectangle. A geo object with the geometry
 | Name              | Option                  | Type     | required  | example       | y.docs |
 | ---------------   | :---------------------: | :------: | :-------: | :-----------: | -----: |
-| v-ymap-rectangle  |                         |          |           |               | [Rectangle](https://yandex.com/dev/maps/jsapi/doc/2.1/ref/reference/Rectangle.html) |
+| y-map-rectangle   |                         |          |           |               | [Rectangle](https://yandex.com/dev/maps/jsapi/doc/2.1/ref/reference/Rectangle.html) |
 |                   | geometry                | Number[] | **true**  | [[55.665, 37.66],[55.64, 37.53]] |
 |                   | properties              | Object   | **false** | { "balloonContentBody": "some text" } |
 |                   | options                 | Object   | **false** | {} |
 
-### v-ymap-route
+### y-map-route
 Plots a route through the specified points.
 | Name              | Option                  | Type     | required  | example       | y.docs |
 | ---------------   | :---------------------: | :------: | :-------: | :-----------: | -----: |
-| v-ymap-route      |                         |          |           |               | [route](https://yandex.com/dev/maps/jsapi/doc/2.1/ref/reference/route.html) |
+| y-map-route       |                         |          |           |               | [route](https://yandex.com/dev/maps/jsapi/doc/2.1/ref/reference/route.html) |
 |                   | points                  | Array    | **true**  | ['Москва, пр. Мира','Москва, ул. Мясницкая'] |
 |                   | params                  | Object   | **false** | {} |
