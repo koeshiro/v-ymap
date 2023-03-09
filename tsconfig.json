@@ -1,19 +1,24 @@
 {
-    "compilerOptions": {
-        "module": "esnext",
-        "moduleResolution": "node",
-        "removeComments": true,
-        "allowSyntheticDefaultImports": true,
-        "target": "es2017",
-        "baseUrl": "./",
-        "incremental": true
-    },
-    "include": [
-        "src/*.ts",
-        "src/**/*.ts"
-    ],
-    "exclude": [
-      "node_modules",
-      "src/index.css"
-    ]
+  "compilerOptions": {
+      "module": "esnext",
+      "moduleResolution": "node",
+      "removeComments": true,
+      "allowSyntheticDefaultImports": true,
+      "target": "es2017",
+      "baseUrl": "./",
+      "incremental": true,
+      "paths": {
+        "@/*": ["./src/*"]
+      },
+      "outDir": "./dist/",
+  },
+  "include": [
+      "src/*.ts",
+      "src/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "src/index.css",
+    "tests/",
+  ]
 }
