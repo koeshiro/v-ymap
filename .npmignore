@@ -1,0 +1,12 @@
+src/
+tests/
+node_modules/
+.vscode/
+.rollup.cache/
+.history/
+.github/
+.env
+.eslintrc.cjs
+.prettierrc.json
+env.d.ts
+vite.config.ts
