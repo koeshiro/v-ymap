@@ -1,0 +1,3 @@
+output/*
+tests/screenshots/diff/*
+tests/screenshots/output/*
