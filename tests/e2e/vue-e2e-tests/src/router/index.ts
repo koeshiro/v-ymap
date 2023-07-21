@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import YMap from "@/pages/YMap";
+import YMap3 from "@/pages/YMap3Test";
 import YRout from "@/pages/YRout";
 import YPlacemark from "@/pages/YPlacemark";
 import YPolygon from "@/pages/YPolygon";
@@ -14,6 +15,11 @@ const router = createRouter({
       path: '/y-map',
       name: 'YMap',
       component: YMap
+    },
+    {
+      path: '/y-map-3',
+      name: 'YMap3',
+      component: YMap3
     },
     {
       path: '/y-rout',

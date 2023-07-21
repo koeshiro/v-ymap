@@ -1,3 +1,5 @@
+import ymaps3, { YMapProps, ReadonlyLngLat, LngLatBounds, ZoomRange, BehaviorType, Config, YMapLocationRequest, MapMode, ZoomRounding, Margin } from "@yandex/ymaps3-types/imperative";
+import { Projection, PixelCoordinates } from "@yandex/ymaps3-types";
 import {
   defineComponent,
   type PropType,
@@ -21,108 +23,47 @@ import { ComponentsWithChildren, VYMap } from '@/constants'
 
 export type MapTypes = 'yandex#map' | 'yandex#satellite' | 'yandex#hybrid'
 
-export type MapOptions = {
-  autoFitToViewport?: string
-  avoidFractionalZoom?: boolean
-  exitFullscreenByEsc?: boolean
-  fullscreenZIndex?: number
-  mapAutoFocus?: boolean
-  maxAnimationZoomDifference?: number
-  maxZoom?: number
-  minZoom?: number
-  nativeFullscreen?: boolean
-  projection?: any
-  restrictMapArea?: boolean | number[][]
-  suppressMapOpenBlock?: boolean
-  suppressObsoleteBrowserNotifier?: boolean
-  yandexMapAutoSwitch?: boolean
-  yandexMapDisablePoiInteractivity?: boolean
-}
+export type MapProperties = MapLoaderOptions & YMapProps;
 
-export type MapProperties = MapLoaderOptions & {
-  center: number[]
-  zoom: number
-  behaviors?: string[]
-  controls?: string[]
-  margin?: number[]
-  type?: string
-  options?: MapOptions
-}
-
-export type MapPanToOption = {
-  checkZoomRange?: boolean
-  delay?: number
-  duration?: number
-  flying?: boolean
-  safe?: boolean
-  timingFunction?: string
-  useMapMargin?: boolean
-}
-
-export type MapBoundOption = {
-  checkZoomRange?: boolean
-  duration?: number
-  preciseZoom?: boolean
-  timingFunction?: string
-  useMapMargin?: boolean
-  zoomMargin?: number | number[]
-}
-
-export type MapCenterOption = {
-  checkZoomRange?: boolean
-  duration?: number
-  timingFunction?: string
-  useMapMargin?: boolean
-}
-
-export type MapGlobalPixelCenterOption = {
-  checkZoomRange?: boolean
-  duration?: number
-  timingFunction?: string
-  useMapMargin?: boolean
-}
-
-export type MapZoom = {
-  checkZoomRange?: boolean
-  duration?: number
-  useMapMargin?: boolean
-}
-
-export type MapMethods = {
-  getBounds: (options?: { useMapMargin: boolean }) => number[][]
-  getCenter: (options?: { useMapMargin: boolean }) => number[]
-  getGlobalPixelCenter: (options?: { useMapMargin: boolean }) => number[]
-  getPanoramaManager: () => Promise<any>
-  getType: () => string
-  getZoom: () => number
-  panTo: (center: number[] | any[], options?: MapPanToOption) => Promise<any>
-  setBounds: (bounds: number[][], options?: MapBoundOption) => Promise<any>
-  setCenter: (center: number[], zoom?: number, options?: MapCenterOption) => Promise<any>
-  setGlobalPixelCenter: (
-    globalPixelCenter: number[],
-    zoom?: number,
-    options?: MapGlobalPixelCenterOption
-  ) => Promise<any>
-  setType: (type: MapTypes | any, options?: { checkZoomRange: boolean }) => Promise<any>
-  setZoom: (zoom: number, options?: MapZoom) => Promise<any>
-}
+export type MapMethods = Pick<
+  ymaps3.YMap, 
+  "container"
+  | "center"
+  | "zoom"
+  | "tilt"
+  | "azimuth"
+  | "bounds"
+  | "zoomRange"
+  | "projection"
+  | "size"
+  | "behaviors"
+  | "config"
+  | "setLocation"
+  | "setMode"
+  | "setZoomRange"
+  | "setBehaviors"
+  | "setZoomRounding"
+  | "setMargin"
+  | "setConfig"
+>;
 
 export type MapData = {
-  maps: any
-  map: any
+  maps: Ref<typeof ymaps3 | null>;
+  map: Ref<ymaps3.YMap | null>;
   dmap: Ref<HTMLDivElement | null>
   stateManager: IMapGeoObjectsStateManager
 }
 
 export type MapSetup = MapData & MapMethods
 
-function processGeoObjects(stateManager: IMapGeoObjectsStateManager, map: any): void {
-  const list = stateManager.getGeoObjects()
-  const defaultParentGeoObjectState = map.value.geoObjects
-  map.value.geoObjects.removeAll()
+function processGeoObjects(stateManager: IMapGeoObjectsStateManager, map: Ref<ymaps3.YMap>): void {
+  map.value.children.forEach(child => map.value.removeChild(child));
+
+  const defaultParentGeoObjectState = map.value;
   let currentParentGeoObjectState: GeoObjectState | null = null
-  let currentParentGeoObject: any | null = defaultParentGeoObjectState
-  list.forEach((getGeoObject: GeoObjectState) => {
+  let currentParentGeoObject: ymaps3.YMap | ymaps3.YMapEntity<any> | ymaps3.YMapGroupEntity<any> = defaultParentGeoObjectState;
+
+  stateManager.getGeoObjects().forEach((getGeoObject: GeoObjectState) => {
     if (ComponentsWithChildren.includes(getGeoObject.parentType)) {
       currentParentGeoObjectState = getGeoObject
       currentParentGeoObject = getGeoObject.geoObject
@@ -130,7 +71,9 @@ function processGeoObjects(stateManager: IMapGeoObjectsStateManager, map: any): 
       currentParentGeoObjectState = null
       currentParentGeoObject = defaultParentGeoObjectState
     }
-    currentParentGeoObject.add(getGeoObject.geoObject)
+    if ('addChild' in currentParentGeoObject) {
+      currentParentGeoObject.addChild(getGeoObject.geoObject)
+    }
   })
 }
 
@@ -171,76 +114,109 @@ export const YMap = defineComponent({
       type: Boolean,
       default: true
     },
-    center: {
-      type: Array as PropType<MapProperties['center']>,
-      required: true,
-      validator(value: number[]) {
-        return value.length === 2 && !Number.isNaN(value[0]) && !Number.isNaN(value[1])
-      }
+    /** Map container css class name */
+    className: {
+      type: String as PropType<MapProperties['className']>,
     },
-    zoom: {
-      type: Number,
-      required: true
+    /** Initial location or request to change location with duration */
+    location: {
+      type: Object as PropType<MapProperties['location']>,
     },
+    /** Initial camera or request to change camera with duration */
+    camera: {
+      type: Object as PropType<MapProperties['camera']>,
+    },
+    /** Map mode, 'auto' (default. Show raster tiles while vector tiles are loading), 'raster' or 'vector' (without raster preloading). */
+    mode: {
+      type: Object as PropType<MapProperties['mode']>,
+    },
+    /** Active behaviors */
     behaviors: {
-      type: Array as PropType<MapProperties['behaviors']>,
+      type: Object as PropType<MapProperties['behaviors']>,
+    },
+    /** Sets the map view area so that the user cannot move outside of this area. */
+    restrictMapArea: {
+      type: Object as PropType<MapProperties['restrictMapArea']>,
       default() {
-        return ['default']
+        return false;
       }
     },
-    controls: {
-      type: Array as PropType<MapProperties['controls']>,
-      default() {
-        return ['default']
-      }
+    /** Restrict min and max map zoom */
+    zoomRange: {
+      type: Object as PropType<MapProperties['zoomRange']>,
     },
+    /** Zoom strategy describes if map center is bound to the zoom point or not */
+    zoomStrategy: {
+      type: Object as PropType<MapProperties['zoomStrategy']>,
+    },
+    /** Set rounding for zoom. If `auto` is selected, zoom will be `snap` for `raster` and `smooth` for `vector` `MapMode`. Default is `auto`.*/
+    zoomRounding: {
+      type: Object as PropType<MapProperties['zoomRounding']>,
+    },
+    /** Map margins */
     margin: {
-      type: Array as PropType<MapProperties['margin']>,
-      default() {
-        return []
-      },
-      validator(value: number[]) {
-        for (const v of value) {
-          if (Number.isNaN(v)) {
-            return false
-          }
-        }
-        return true
-      }
+      type: Object as PropType<MapProperties['margin']>,
     },
-    type: {
-      type: String as PropType<MapProperties['type']>,
-      default: 'yandex#map' as MapTypes,
-      validator(value: MapTypes) {
-        return ['yandex#map', 'yandex#satellite', 'yandex#hybrid'].includes(value)
-      }
+    /** Other configs */
+    config: {
+      type: Object as PropType<MapProperties['config']>,
     },
-    options: {
-      type: Object as PropType<MapProperties['options']>,
-      default() {
-        return {}
-      }
-    }
+    /** Strategy for fetching hotspots, for whole viewport or for tiles that pointer is hovering at */
+    hotspotsStrategy: {
+      type: Object as PropType<MapProperties['hotspotsStrategy']>,
+    },
+    /**
+     * Whether to show map copyrights.
+     * > The option is ignored if `config.meta.copyrights.allowRemove` has a falsy value
+     * @internal
+     */
+    copyrights: {
+      type: Object as PropType<MapProperties['copyrights']>,
+    },
+    /** Position of copyright on the page. Default is 'bottom right' */
+    copyrightsPosition: {
+      type: Object as PropType<MapProperties['copyrightsPosition']>,
+    },
+    /**
+     * Projection used in map
+     */
+    projection: {
+      type: Object as PropType<MapProperties['projection']>,
+    },
+    /**
+     * Whether to repeat the world in X and Y
+     */
+    worldOptions: {
+      type: Object as PropType<MapProperties['worldOptions']>,
+    },
   },
   expose: [
     'dmap',
     'map',
-    'getCenter',
-    'getBounds',
-    'getGlobalPixelCenter',
-    'getPanoramaManager',
-    'getType',
-    'getZoom',
-    'panTo',
-    'setBounds',
-    'setCenter',
-    'setGlobalPixelCenter',
-    'setType',
-    'setZoom'
+    'dmap',
+    'stateManager',
+    "container",
+    "center",
+    "zoom",
+    "tilt",
+    "azimuth",
+    "bounds",
+    "zoomRange",
+    "projection",
+    "size",
+    "behaviors",
+    "config",
+    "setLocation",
+    "setMode",
+    "setZoomRange",
+    "setBehaviors",
+    "setZoomRounding",
+    "setMargin",
+    "setConfig"
   ],
   setup($props: MapProperties, context): MapSetup {
-    const maps = shallowRef<any>(null)
-    const map = shallowRef<any>(null)
+    const maps = shallowRef<MapSetup['maps']>(null)
+    const map = shallowRef<MapSetup['map']>(null)
     const dmap = ref<HTMLDivElement | null>(null)
     const stateManager = new MapGeoObjectsStateManager()
     const state = stateManager.getGeoObjectsRef()
@@ -251,19 +227,9 @@ export const YMap = defineComponent({
         YMAPS_VERSION: $props.YMAPS_VERSION,
         YMAPS_LOAD_BY_REQUIRE: $props.YMAPS_LOAD_BY_REQUIRE
       })
-      map.value = new maps.value.Map(
+      map.value = new maps.value.YMap(
         dmap.value,
-        {
-          center: $props.center,
-          zoom: $props.zoom,
-          behaviors: $props.behaviors,
-          controls: $props.controls,
-          margin: $props.margin,
-          type: $props.type
-        },
-        {
-          ...$props.options
-        }
+        $props,
       )
       nextTick(() => {
         processGeoObjects(stateManager, map)
@@ -290,46 +256,60 @@ export const YMap = defineComponent({
       map,
       dmap,
       stateManager,
-      getCenter: (options?: { useMapMargin: boolean }): number[] => {
-        return map.value?.getCenter(options)
+      get container(): HTMLElement {
+        return map.value.container;
       },
-      getBounds: (options?: { useMapMargin: boolean }): number[][] => {
-        return map.value?.getBounds(options)
+      get center(): ReadonlyLngLat {
+        return map.value.center;
       },
-      getGlobalPixelCenter: (options?: { useMapMargin: boolean }): number[] => {
-        return map.value?.getGlobalPixelCenter(options)
+      get zoom(): number {
+        return map.value.zoom;
       },
-      getPanoramaManager: (): Promise<any> => {
-        return map.value?.getPanoramaManager()
+      get tilt(): number {
+        return map.value.tilt;
       },
-      getType: (): string => {
-        return map.value?.getType()
+      get azimuth(): number{
+        return map.value.azimuth;
       },
-      getZoom: (): number => {
-        return map.value?.getZoom()
+      get bounds(): LngLatBounds{
+        return map.value.bounds;
       },
-      panTo: (center: number[] | any[], options?: MapPanToOption): Promise<any> => {
-        return map.value?.panTo(center, options)
+      get zoomRange(): Readonly<ZoomRange>{
+        return map.value.zoomRange;
       },
-      setBounds: (bounds: number[][], options?: MapBoundOption): Promise<any> => {
-        return map.value?.setBounds(bounds, options)
+      get projection(): Projection{
+        return map.value.projection;
       },
-      setCenter: (center: number[], zoom?: number, options?: MapCenterOption): Promise<any> => {
-        return map.value?.setCenter(center, zoom, options)
+      get size(): PixelCoordinates{
+        return map.value.size;
       },
-      setGlobalPixelCenter: (
-        globalPixelCenter: number[],
-        zoom?: number,
-        options?: MapGlobalPixelCenterOption
-      ): Promise<any> => {
-        return map.value?.setGlobalPixelCenter(globalPixelCenter, zoom, options)
+      get behaviors(): Readonly<BehaviorType[]>{
+        return map.value.behaviors;
       },
-      setType: (type: MapTypes | any, options?: { checkZoomRange: boolean }): Promise<any> => {
-        return map.value?.setType(type, options)
+      get config(): Readonly<Config>{
+        return map.value.config;
       },
-      setZoom: (zoom: number, options?: MapZoom): Promise<any> => {
-        return map.value?.setZoom(zoom, options)
-      }
+      setLocation(location: YMapLocationRequest): void{
+        return map.value.setLocation(location);
+      },
+      setMode(mode: MapMode): void{
+        return map.value.setMode(mode);
+      },
+      setZoomRange(zoomRange: ZoomRange): void{
+        return map.value.setZoomRange(zoomRange);
+      },
+      setBehaviors(behaviors: BehaviorType[]): void{
+        return map.value.setBehaviors(behaviors);
+      },
+      setZoomRounding(zoomRounding: ZoomRounding): void{
+        return map.value.setZoomRounding(zoomRounding);
+      },
+      setMargin(margin: Margin): void{
+        return map.value.setMargin(margin);
+      },
+      setConfig(config: Config): void{
+        return map.value.setConfig(config);
+      },
     }
   }
 })

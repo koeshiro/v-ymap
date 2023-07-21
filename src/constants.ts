@@ -1,2 +1,2 @@
 export const VYMap = 'v-ymap'
-export const ComponentsWithChildren = ['y-clusterer', 'y-clusterer']
+export const ComponentsWithChildren = ['y-collection', 'y-controls']

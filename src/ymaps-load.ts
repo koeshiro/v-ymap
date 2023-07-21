@@ -1,3 +1,5 @@
+import ymaps3 from "@yandex/ymaps3-types/imperative";
+
 let mapsObject: any = null
 let importPromise: Promise<any> | null = null
 
@@ -31,11 +33,11 @@ export type MapLoaderOptions = {
   YMAPS_NS?: string
 }
 
-export const YMapsLoad = async function (options: MapLoaderOptions): Promise<any> {
+export const YMapsLoad = async function (options: MapLoaderOptions): Promise<typeof ymaps3> {
   if (mapsObject === null) {
     const o = {
       YMAPS_LOAD_BY_REQUIRE: false,
-      YMAPS_VERSION: '2.1',
+      YMAPS_VERSION: '3.0',
       ...options
     }
     mapsObject = await load(
@@ -47,5 +49,5 @@ export const YMapsLoad = async function (options: MapLoaderOptions): Promise<any
       o.YMAPS_NS ?? undefined
     )
   }
-  return mapsObject
+  return window.ymaps3;
 }

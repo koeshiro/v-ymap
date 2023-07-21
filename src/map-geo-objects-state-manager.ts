@@ -1,8 +1,9 @@
 import { type ShallowRef, triggerRef, type Ref, shallowRef } from 'vue'
+import type ymaps3 from "@yandex/ymaps3-types";
 
 export type GeoObjectState = {
   uid: number
-  geoObject: any
+  geoObject: ymaps3.YMapEntity<any> | ymaps3.YMapGroupEntity<any>
   parentType: string
 }
 
