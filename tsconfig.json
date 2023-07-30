@@ -11,7 +11,8 @@
         "@/*": ["./src/*"]
       },
       "outDir": "./dist/",
-      "types": ["@yandex/ymaps3-types"],
+      "types": [ "@yandex/ymaps3-types", "@types/react", "@types/react-dom" ],
+      "skipLibCheck": true,
   },
   "include": [
     "src/*.ts",

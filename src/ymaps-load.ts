@@ -1,4 +1,4 @@
-import ymaps3 from "@yandex/ymaps3-types/imperative";
+import ymaps3 from "@yandex/ymaps3-types/index";
 
 let mapsObject: any = null
 let importPromise: Promise<any> | null = null
@@ -49,5 +49,5 @@ export const YMapsLoad = async function (options: MapLoaderOptions): Promise<typ
       o.YMAPS_NS ?? undefined
     )
   }
-  return window.ymaps3;
+  return (window as any).ymaps3;
 }

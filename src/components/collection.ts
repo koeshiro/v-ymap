@@ -1,6 +1,7 @@
-import { type Ref, defineComponent, getCurrentInstance, onMounted, ref, watch } from 'vue'
-import { injectMapGeoObjectState, injectMaps } from '../provider'
-import { type IMapGeoObjectsStateManager } from 'src/map-geo-objects-state-manager'
+import type { Ref } from 'vue'
+import type { IMapGeoObjectsStateManager } from '@/map-geo-objects-state-manager'
+import { defineComponent, getCurrentInstance, onMounted, ref, watch } from 'vue'
+import { injectMapGeoObjectState, injectMaps } from '@/provider'
 import ymaps3 from "@yandex/ymaps3-types/imperative";
 
 export type CollectionProperties = {
@@ -12,7 +13,7 @@ export type CollectionMethods = {
 
 export type CollectionData = {
   geoObjectKey: Ref<number | undefined>
-  maps: Ref<typeof ymaps3 | null>;
+  maps: ReturnType<typeof injectMaps>
   stateManager: IMapGeoObjectsStateManager | undefined
 } & CollectionMethods
 
@@ -27,24 +28,34 @@ export const YCollection = defineComponent({
     const stateManager = injectMapGeoObjectState()
     const instance = getCurrentInstance()
     const geoObjectKey = ref(instance?.uid)
-    onMounted(() => {
-      if (instance?.uid && instance?.parent?.type?.name) {
-        stateManager?.setGeoObject(
-          instance.uid,
-          instance.parent.type?.name,
-          getGeoObject(maps, $props)
-        )
+    onMounted(async () => {
+      if (
+          instance?.uid
+          && instance?.parent?.type?.name
+          && maps
+          && maps.value
+      ) {
+          stateManager?.setGeoObject(
+              instance.uid,
+              instance.parent.type?.name,
+              await getGeoObject(maps as Ref<typeof ymaps3>, $props)
+          )
       }
-    })
-    watch($props, async (props) => {
-      if (instance?.uid && instance?.parent?.type?.name) {
-        stateManager?.setGeoObject(
-          instance.uid,
-          instance.parent.type?.name,
-          await getGeoObject(maps, props)
-        )
+  })
+  watch($props, async (props) => {
+      if (
+          instance?.uid
+          && instance?.parent?.type?.name
+          && maps
+          && maps.value
+      ) {
+          stateManager?.setGeoObject(
+              instance.uid,
+              instance.parent.type?.name,
+              await getGeoObject(maps as Ref<typeof ymaps3>, props)
+          )
       }
-    })
+  })
     return {
       geoObjectKey,
       maps,
