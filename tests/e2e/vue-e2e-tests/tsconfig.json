@@ -7,7 +7,7 @@
       "@/*": ["./src/*"],
       "v-ymap": ["../../../dist/index"],
       "v-ymap/*": ["../../../dist/*"],
-    }
+    },
   },
 
   "references": [

@@ -1,12 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import YMap from "@/pages/YMap";
-import YMap3 from "@/pages/YMap3Test";
+/*import YMap3 from "@/pages/YMap3Test";
 import YRout from "@/pages/YRout";
 import YPlacemark from "@/pages/YPlacemark";
 import YPolygon from "@/pages/YPolygon";
 import YPolyline from "@/pages/YPolyline";
 import YRectangle from "@/pages/YRectangle";
-import YCircle from "@/pages/YCircle";
+import YCircle from "@/pages/YCircle";*/
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -16,6 +16,7 @@ const router = createRouter({
       name: 'YMap',
       component: YMap
     },
+    /*
     {
       path: '/y-map-3',
       name: 'YMap3',
@@ -51,6 +52,7 @@ const router = createRouter({
       name: 'YCircle',
       component: YCircle
     },
+    */
   ]
 })
 

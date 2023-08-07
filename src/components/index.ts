@@ -49,7 +49,7 @@ export type MapMethods = Pick<
 export type MapData = {
   maps: ShallowRef<typeof ymaps3 | null>;
   map: ShallowRef<ymaps3.YMap | null>;
-  dmap: Ref<HTMLDivElement | null>;
+  dmap: Ref<HTMLDivElement | undefined>;
   stateManager: IMapGeoObjectsStateManager;
 } & {
   container: ymaps3.YMap['container'] | undefined;
@@ -217,7 +217,7 @@ export const YMap = defineComponent({
   setup($props: MapProperties, context): MapSetup {
     const maps: MapSetup['maps'] = shallowRef(null)
     const map: MapSetup['map'] = shallowRef(null)
-    const dmap = ref<HTMLDivElement | null>(null)
+    const dmap = ref<HTMLDivElement | undefined>()
     const stateManager = new MapGeoObjectsStateManager()
     const state = stateManager.getGeoObjectsRef()
     onMounted(async () => {
@@ -264,7 +264,7 @@ export const YMap = defineComponent({
             'div',
             {
               class: 'yandex-maps',
-              ref: 'dmap'
+              ref: dmap
             },
             h(
               'div',
